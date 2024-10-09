@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/adminstyles.css">
+    <title>Party List</title>
+
+
+</head>
+<body>
+  <div class="topnav">
+    <a href="/admin">Admin Home</a>
+  </div>
+  
+    <div class="container">
+        <div class="header">
+          <form action="/add-party" method="get">
+            <button type="submit" class="add-party-btn">Add Reservation</button>
+          </form>
+        </div>  
+        {% if tables %}
+            <div class="party-list">
+                <div class="party-header">
+                    <div>Name</div>
+                    <div>Email</div>
+                    <div>Phone</div>
+                    <div>Bottle</div>
+                    <div></div>
+                </div>
+                {% for table in tables %}
+                    <div class="party-row">
+                        
+
+                        <div>{{ table.name }} {{table.surname}}</div>
+                        <div>{{ table.email }}</div>
+                        <div>{{ table.phone }}</div>
+                        {% if table.bottle != 0 %}
+                        <div>{{ table.bottle }}</div>
+                        {% endif %}
+                        <div class="buttons">
+
+                          <form action="/edit-party" method="GET">
+                            <button class="edit-btn">Edit</button>
+                            <input type="hidden" name="partyid" id="partyid" value="{{party.id}}">
+                          </form>
+                          
+                          <form action="/remove-party" method="GET">
+                            <button class="delete-btn">Delete</button>
+                            <input type="hidden" name="partyid" id="partyid" value="{{party.id}}">
+                          </form>
+
+  
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No reservations</p>
+        {% endif %}
+    </div>
+</body>
+</html>
